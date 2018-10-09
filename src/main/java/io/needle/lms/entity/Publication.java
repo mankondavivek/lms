@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.JoinColumn;
 import lombok.Data;
 
@@ -16,15 +19,15 @@ import lombok.Data;
 @Data
 public class Publication {
 
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+
 	private String name;
-	
-	 @ManyToMany(cascade = CascadeType.ALL)
-	 @JoinTable(name = "book_publications", 
-	 			joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"), 
-	 			inverseJoinColumns = @JoinColumn(name = "publication_id", referencedColumnName = "id"))
+
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "book_publications", joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "publication_id", referencedColumnName = "id"))
+	@JsonIgnoreProperties("publications")
 	private List<Book> books;
 
 	public Long getId() {

@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Data;
 
 @Entity
@@ -35,6 +37,7 @@ public class Book {
 	private Student issuedTo;
 
 	@ManyToMany(mappedBy = "books")
+	@JsonIgnoreProperties("books")
 	private List<Publication> publications;
 
 	@ManyToOne
