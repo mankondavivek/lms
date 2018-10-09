@@ -3,20 +3,27 @@ package io.needle.lms.entity;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Data;
 
 @Entity
 @Data
+@JsonIdentityInfo(
+		  generator = ObjectIdGenerators.PropertyGenerator.class, 
+		  property = "id")
 public class Book {
 
 	@Id
@@ -36,8 +43,10 @@ public class Book {
 	@JoinColumn(name = "student_id")
 	private Student issuedTo;
 
-	@ManyToMany(mappedBy = "books")
-	@JsonIgnoreProperties("books")
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "publications_book", joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "publication_id", referencedColumnName = "id"))
+	@JsonManagedReference
 	private List<Publication> publications;
 
 	@ManyToOne
