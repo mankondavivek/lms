@@ -37,7 +37,7 @@ public class LibController {
 	private LibService libService;
 
 	@GetMapping("/list/")
-	public ResponseEntity<?> listAllBook() {
+	public ResponseEntity<?> listAllBooks() {
 
 		List<Book> books = bookService.getAllBooks();
 		if (books.isEmpty()) {
@@ -107,8 +107,9 @@ public class LibController {
 	}
 
 	@PostMapping("/check/")
-	public ResponseEntity<?> requestBookAvailability(@RequestBody long bookId) {
+	public ResponseEntity<?> requestBookAvailability(@RequestBody IssueDetails details) {
 
+		long bookId = details.getBookId();
 		logger.info(" Book : {}", bookId);
 
 		Book book;
@@ -121,7 +122,7 @@ public class LibController {
 					HttpStatus.NOT_FOUND);
 		}
 		
-		if (book.getNextAvailableSlot().compareTo(Calendar.getInstance().getTime()) > 0) {
+		if (book.getNextAvailableSlot().compareTo(Calendar.getInstance().getTime()) < 0) {
 			//String message = book.getNextAvailableSlot().toString() ;
 			return new ResponseEntity<Date>(book.getNextAvailableSlot(), HttpStatus.OK);
 		}

@@ -35,52 +35,54 @@ public class LibServiceImpl implements LibService {
 			throw new NotFoundException("Book not found");
 		}
 
-		if (book.getNextAvailableSlot().compareTo(Calendar.getInstance().getTime()) > 0) {
-			throw new AvailabilityException(
-					"Sorry. The book you requested is available only after " + book.getNextAvailableSlot().toString());
-		} else {
+		if (book.getNextAvailableSlot() != null) {
 
-			Calendar cal = Calendar.getInstance();
-			cal.add(Calendar.DAY_OF_MONTH, noOfDaysAllowed);
-
-			book.setNextAvailableSlot(cal.getTime());
-
-			Student student = studentRepository.getOne(issueDetails.getStudentId());
-
-			if (student == null) {
-				throw new NotFoundException("Student not found");
+			if (book.getNextAvailableSlot().compareTo(Calendar.getInstance().getTime()) > 0) {
+				throw new AvailabilityException("Sorry. The book you requested is available only after "
+						+ book.getNextAvailableSlot().toString());
 			}
-			book.setIssuedTo(student);
-
-			bookRepository.save(book);
-
-			return book;
 		}
+
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DAY_OF_MONTH, noOfDaysAllowed);
+
+		book.setNextAvailableSlot(cal.getTime());
+
+		Student student = studentRepository.getOne(issueDetails.getStudentId());
+
+		if (student == null) {
+			throw new NotFoundException("Student not found");
+		}
+		book.setIssuedTo(student);
+
+		bookRepository.save(book);
+
+		return book;
 	}
 
 	@Override
 	public void returnBook(IssueDetails returnDetails) throws NotFoundException, InvalidDataException {
-		
+
 		Book book = bookRepository.getOne(returnDetails.getBookId());
 
 		if (book == null) {
 			throw new NotFoundException("Book not found");
 		}
-		
-		if(book.getIssuedTo().getId() != returnDetails.getStudentId()) {
+
+		if (book.getIssuedTo().getId() != returnDetails.getStudentId()) {
 			throw new InvalidDataException("Student who issued the book should return it.");
 		}
-		
+
 		Student student = studentRepository.getOne(returnDetails.getStudentId());
 
 		if (student == null) {
 			throw new NotFoundException("Student not found");
 		}
-		
+
 		book.setIssuedTo(null);
-		
+
 		book.setNextAvailableSlot(Calendar.getInstance().getTime());
-		
+
 		bookRepository.save(book);
 	}
 

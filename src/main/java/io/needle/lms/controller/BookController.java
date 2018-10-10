@@ -40,7 +40,7 @@ public class BookController {
 		if (books.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity<List<Book>>(books, HttpStatus.OK);
+		return new ResponseEntity<>(books, HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/book/{id}")

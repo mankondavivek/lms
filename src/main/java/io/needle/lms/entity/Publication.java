@@ -1,14 +1,9 @@
 package io.needle.lms.entity;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -27,9 +22,9 @@ public class Publication {
 
 	private String name;
 
-	@ManyToMany(mappedBy = "publications")
+	/*@ManyToMany(mappedBy = "publications")
 	@JsonBackReference
-	private List<Book> books;
+	private List<Book> books;*/
 
 	public Long getId() {
 		return id;
@@ -45,13 +40,5 @@ public class Publication {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public List<Book> getBooks() {
-		return books;
-	}
-
-	public void setBooks(List<Book> books) {
-		this.books = books;
 	}
 }

@@ -1,18 +1,17 @@
 package io.needle.lms.entity;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
 
 @Entity
 @Data
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Student {
 
 	@Id
@@ -24,8 +23,9 @@ public class Student {
 	private String username;
 	private String password;
 
-	@OneToMany(mappedBy = "issuedTo", cascade = CascadeType.ALL)
-	private List<Book> booksTaken;
+	/*@OneToMany(mappedBy = "issuedTo", cascade = CascadeType.ALL)
+	@JsonBackReference
+	private List<Book> booksTaken;*/
 
 	public Long getId() {
 		return id;
@@ -41,14 +41,6 @@ public class Student {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public List<Book> getBooksTaken() {
-		return booksTaken;
-	}
-
-	public void setBooksTaken(List<Book> booksTaken) {
-		this.booksTaken = booksTaken;
 	}
 
 	public String getUsername() {
