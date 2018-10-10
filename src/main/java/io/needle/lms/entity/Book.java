@@ -1,5 +1,6 @@
 package io.needle.lms.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +25,13 @@ import lombok.Data;
 @JsonIdentityInfo(
 		  generator = ObjectIdGenerators.PropertyGenerator.class, 
 		  property = "id")
-public class Book {
+public class Book implements Serializable{
+
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

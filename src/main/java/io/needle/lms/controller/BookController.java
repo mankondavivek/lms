@@ -44,7 +44,7 @@ public class BookController {
 	}
 
 	@GetMapping(value = "/book/{id}")
-	public ResponseEntity<?> getBook(@PathVariable("id") Long id) {
+	public ResponseEntity<?> getBook(@PathVariable("id") long id) {
 
 		logger.info("Fetching Book with id {}", id);
 		Book book;
@@ -84,7 +84,7 @@ public class BookController {
 	}
 
 	@PutMapping(value = "/book/{id}")
-	public ResponseEntity<?> updateBook(@PathVariable("id") Long id, @RequestBody Book book) {
+	public ResponseEntity<?> updateBook(@PathVariable("id") long id, @RequestBody Book book) {
 		logger.info("Updating Book with id {}", id);
 
 		Book currentBook;
@@ -115,7 +115,7 @@ public class BookController {
 	}
 
 	@DeleteMapping(value = "/book/{id}")
-	public ResponseEntity<?> deleteBook(@PathVariable("id") Long id) {
+	public ResponseEntity<?> deleteBook(@PathVariable("id") long id) {
 
 		logger.info("Fetching & Deleting Book with id {}", id);
 

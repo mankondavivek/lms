@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class UserData {
 	
+	private String fullName;
 	private String username;
 	private String password;
 	
@@ -20,4 +21,11 @@ public class UserData {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public String getFullName() {
+		return fullName;
+	}
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+	
 }
